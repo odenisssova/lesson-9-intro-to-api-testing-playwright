@@ -3,10 +3,15 @@ import { expect, test } from '@playwright/test'
 import { StatusCodes } from 'http-status-codes'
 
 const BASE_URL = 'https://backend.tallinn-learning.ee/test-orders'
+const requestHeaders = {
+  api_key: '1234567890123456',
+}
 
+// GET
 test('get order with correct id should receive code 200', async ({ request }) => {
   const response = await request.get(`${BASE_URL}/1`) // .get(BASE_URL + '/1')
-  expect(response.status()).toBe(200)
+  expect(response.status()).toBe(StatusCodes.OK)
+  console.log('GET response status:', response.status())
 })
 
 test('get order with incorrect id should receive code 400', async ({ request }) => {
@@ -21,22 +26,29 @@ test('get order with incorrect id should receive code 400', async ({ request }) 
   expect(responseOrderIdTest.status()).toBe(StatusCodes.BAD_REQUEST)
 })
 
-test('post order with correct data should receive code 200', async ({ request }) => {
-  // prepare request body
-  const requestBody = {
+// PUT
+test('put order with incorrect id should receive code 200', async ({ request }) => {
+  const updateOrder = {
     status: 'OPEN',
-    courierId: 0,
-    customerName: 'string',
-    customerPhone: 'string',
-    comment: 'string',
-    id: 0,
+    courierId: 2,
+    customerName: 'Olga',
+    customerPhone: '+37255511122',
+    comment: 'Order updated successfully',
+    id: 1,
   }
-  // Send a POST request to the server
-  const response = await request.post(BASE_URL, {
-    data: requestBody,
+
+  const response = await request.put(`${BASE_URL}/2`, {
+    headers: requestHeaders,
+    data: updateOrder,
   })
-  // Log the response status and body
-  console.log('response status:', response.status())
-  console.log('response body:', await response.json())
   expect(response.status()).toBe(StatusCodes.OK)
+  console.log('PUT response status:', response.status())
+})
+//DELETE
+test('delete existing order should receive code 204', async ({ request }) => {
+  const response = await request.delete(`${BASE_URL}/2`, {
+    headers: requestHeaders,
+  })
+  expect(response.status()).toBe(StatusCodes.NO_CONTENT)
+  console.log('DELETE response status:', response.status())
 })
