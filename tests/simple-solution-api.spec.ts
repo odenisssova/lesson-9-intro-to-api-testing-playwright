@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes'
 
 const BASE_URL = 'https://backend.tallinn-learning.ee/test-orders'
 const requestHeaders = {
-  api_key: '1234567890123456',
+  api_key: '1234567890123456'
 }
 
 // GET
@@ -39,7 +39,7 @@ test('put order with incorrect id should receive code 200', async ({ request }) 
 
   const response = await request.put(`${BASE_URL}/2`, {
     headers: requestHeaders,
-    data: updateOrder,
+    data: updateOrder
   })
   expect(response.status()).toBe(StatusCodes.OK)
   console.log('PUT response status:', response.status())
@@ -47,7 +47,7 @@ test('put order with incorrect id should receive code 200', async ({ request }) 
 //DELETE
 test('delete existing order should receive code 204', async ({ request }) => {
   const response = await request.delete(`${BASE_URL}/2`, {
-    headers: requestHeaders,
+    headers: requestHeaders
   })
   expect(response.status()).toBe(StatusCodes.NO_CONTENT)
   console.log('DELETE response status:', response.status())
