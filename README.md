@@ -5,8 +5,8 @@ The task to cover basic API requests such as: GET, PUT, DELETE and to check the 
 
 ## API Testing Checklist
 
-| Endpoint            | Method     | Expected Status Code | Notes                      |
-|---------------------|------------|----------------------|----------------------------|
-| `/test-orders/{id}` | **GET**    | 200 (OK)             | Get order by ID            |
-| `/test-orders/{id}` | **PUT**    | 200 OK               | Update existing order      |
-| `/test-orders/{id}` | **DELETE** | 204 (No Content)     | Delete existing order      |
+| Endpoint            | Method     | Expected Status Code | Notes                 |
+| ------------------- | ---------- | -------------------- | --------------------- |
+| `/test-orders/{id}` | **GET**    | 200 (OK)             | Get order by ID       |
+| `/test-orders/{id}` | **PUT**    | 200 OK               | Update existing order |
+| `/test-orders/{id}` | **DELETE** | 204 (No Content)     | Delete existing order |
