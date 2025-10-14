@@ -1,8 +1,15 @@
 import { expect, test } from '@playwright/test'
-
+import Ajv from 'ajv'
 import { StatusCodes } from 'http-status-codes'
+import { OrderDTO } from './dto/OrderDTO'
+
+import { orderSchema } from './dto/order-schema'
 
 const BASE_URL = 'https://backend.tallinn-learning.ee/test-orders'
+
+const ajv = new Ajv()
+const validate = ajv.compile(orderSchema)
+
 const requestHeaders = {
   api_key: '1234567890123456',
 }
@@ -11,7 +18,6 @@ const requestHeaders = {
 test('get order with correct id should receive code 200', async ({ request }) => {
   const response = await request.get(`${BASE_URL}/1`) // .get(BASE_URL + '/1')
   expect(response.status()).toBe(StatusCodes.OK)
-  console.log('GET response status:', response.status())
 })
 
 test('get order with incorrect id should receive code 400', async ({ request }) => {
@@ -42,7 +48,6 @@ test('put order with incorrect id should receive code 200', async ({ request }) 
     data: updateOrder,
   })
   expect(response.status()).toBe(StatusCodes.OK)
-  console.log('PUT response status:', response.status())
 })
 //DELETE
 test('delete existing order should receive code 204', async ({ request }) => {
@@ -50,5 +55,17 @@ test('delete existing order should receive code 204', async ({ request }) => {
     headers: requestHeaders,
   })
   expect(response.status()).toBe(StatusCodes.NO_CONTENT)
-  console.log('DELETE response status:', response.status())
 })
+
+//test('post order with correct data should receive code 200', async ({ request }) => {
+//   const requestBody = OrderDTO.createOrderWithRandomData()
+//   const response = await request.post(BASE_URL, {
+//     data: requestBody,
+//   })
+//
+//   const responseData: OrderDTO = await response.json()
+//   const valid = validate(responseData)
+//   expect.soft(valid).toBeTruthy()
+//   expect.soft(response.status()).toBe(StatusCodes.OK)
+//   OrderDTO.checkServerResponse(responseData)
+// })
