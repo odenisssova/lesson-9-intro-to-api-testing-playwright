@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test'
 import Ajv from 'ajv'
 import { StatusCodes } from 'http-status-codes'
 import { OrderDTO } from './dto/OrderDTO'
-
 import { orderSchema } from './dto/order-schema'
 
 const BASE_URL = 'https://backend.tallinn-learning.ee/test-orders'
@@ -77,20 +76,14 @@ test('Delete order with correct id', async ({ request }) => {
   const responseCreate = await request.post(BASE_URL, {
     data: requestBody,
   })
-
   const responseDelete = await request.delete(`${BASE_URL}/${requestBody.id}`, {
-    headers: {
-      api_key: '1234567890123456',
-    },
+    headers: requestHeaders,
   })
 
   const responseCreateData: OrderDTO = await responseCreate.json()
-  const responseDeleteData: OrderDTO = await responseCreate.json()
 
   expect.soft(responseCreate.status()).toBe(StatusCodes.OK)
-  expect.soft(responseDelete.status()).toBe(204)
+  expect.soft(responseDelete.status()).toBe(StatusCodes.NO_CONTENT)
   const validCreateJson = validate(responseCreateData)
-  const validDeleteJson = validate(responseDeleteData)
   expect(validCreateJson).toBe(true)
-  expect(validDeleteJson).toBe(true)
 })

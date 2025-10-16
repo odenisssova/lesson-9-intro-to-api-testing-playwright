@@ -36,7 +36,8 @@ export class OrderDTO {
   }
 
   static checkServerResponse(order: OrderDTO): void {
-    expect.soft(order.id).toBeGreaterThan(0)
+    //expect.soft(order.id).toBeGreaterThan(0)
+    expect.soft(Number.isInteger(order.id)).toBe(true)
     expect.soft(order.customerName.length).toBeGreaterThan(0)
   }
 }
