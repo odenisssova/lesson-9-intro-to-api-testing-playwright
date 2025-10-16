@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test'
 import Ajv from 'ajv'
 import { StatusCodes } from 'http-status-codes'
 import { OrderDTO } from './dto/OrderDTO'
-
 import { orderSchema } from './dto/order-schema'
 
 const BASE_URL = 'https://backend.tallinn-learning.ee/test-orders'
@@ -13,9 +12,6 @@ const validate = ajv.compile(orderSchema)
 const requestHeaders = {
   api_key: '1234567890123456',
 }
-
-const ajv = new Ajv()
-const validate = ajv.compile(orderSchema)
 
 // GET
 test('get order with correct id should receive code 200', async ({ request }) => {
