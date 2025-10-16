@@ -6,6 +6,10 @@ import { OrderDTO } from './dto/OrderDTO'
 import { orderSchema } from './dto/order-schema'
 
 const BASE_URL = 'https://backend.tallinn-learning.ee/test-orders'
+
+const ajv = new Ajv()
+const validate = ajv.compile(orderSchema)
+
 const requestHeaders = {
   api_key: '1234567890123456',
 }
