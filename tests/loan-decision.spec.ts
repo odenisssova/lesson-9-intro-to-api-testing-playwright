@@ -11,7 +11,7 @@ const requestHeaders = {
   api_key: '1234567890123456',
 }
 
-function checkPeriods(periods: number[], allowed: number[]) {
+function checkPeriods(periods: number[], allowed: number[]): void {
   expect.soft(Array.isArray(periods)).toBeTruthy()
   if (periods.length > 0) {
     for (const p of periods) {

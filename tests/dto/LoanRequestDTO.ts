@@ -24,7 +24,7 @@ export class LoanRequestDTO {
     this.loanPeriod = loanPeriod
   }
 
-  static checkServerResponse(loanData: LoanRequestDTO) {
+  static async checkServerResponse(loanData: LoanRequestDTO): Promise<void> {
     expect.soft(loanData.income).toBeGreaterThan(0)
     expect.soft(loanData.debt).toBeGreaterThanOrEqual(0)
     expect.soft(loanData.age).toBeGreaterThan(16)
